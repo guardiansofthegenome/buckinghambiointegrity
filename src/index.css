@@ -1,68 +1,98 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* Light foundation */
+  --bg: #ffffff;
+  --text: rgba(12, 18, 32, 0.98);
+  --muted: rgba(12, 18, 32, 0.72);
+  --faint: rgba(12, 18, 32, 0.52);
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --border: rgba(12, 18, 32, 0.12);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Surfaces (light theme) */
+  --surface: rgba(18, 28, 47, 0.04);
+  --surfaceBorder: rgba(18, 28, 47, 0.10);
+
+  /* Brand accent (your ocean charcoal) */
+  --brand: #121c2f;
+  --link: rgba(18, 28, 47, 0.92);
+
+  /* Type scale */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  --tracking-tight: -0.02em;
+
+  --h1: clamp(40px, 4.6vw, 56px);
+  --h2: clamp(28px, 3.2vw, 38px);
+  --body: 16px;
+  --lead: 18px;
+  --small: 14px;
+
+  --lh-tight: 1.06;
+  --lh-body: 1.55;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+/* Optional surface mode toggle (keep if you want the switch) */
+:root[data-surface="panel"] {
+  --surface: rgba(18, 28, 47, 0.05);
+  --surfaceBorder: rgba(18, 28, 47, 0.12);
 }
-a:hover {
-  color: #535bf2;
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--body);
+  line-height: var(--lh-body);
+  letter-spacing: 0.1px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2 {
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: var(--h1);
+  line-height: var(--lh-tight);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+h2 {
+  font-size: var(--h2);
+  line-height: 1.12;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+p {
+  margin: 0;
+  color: var(--muted);
+}
+
+p + p {
+  margin-top: 12px;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+a.btnPrimary:hover,
+a.btnGhost:hover,
+a.btnPrimary:focus-visible,
+a.btnGhost:focus-visible {
+  text-decoration: none;
 }

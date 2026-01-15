@@ -1,42 +1,320 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* =========================
+   App layout + density system
+   ========================= */
+
+.app.vault {
+  --stack: clamp(18px, 2.4vw, 26px);
+  --panel-pad: clamp(18px, 2.8vw, 24px);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack);
+}
+
+/* Optional toggles (pick ONE class on <main>) */
+.app.vault.density-compact {
+  --stack: clamp(14px, 1.8vw, 20px);
+  --panel-pad: clamp(14px, 2vw, 18px);
+}
+
+.app.vault.density-relaxed {
+  --stack: clamp(28px, 3.8vw, 40px);
+  --panel-pad: clamp(22px, 3.6vw, 32px);
+}
+
+/* =========================
+   Hero
+   ========================= */
+
+.hero {
   text-align: center;
+  padding-top: 2px;
+  padding-bottom: calc(var(--stack) * 0.25);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Make the hero behave like the other cards when <main> has hero-panel */
+.app.vault.hero-panel .hero {
+  width: min(100%, calc(76ch + (2 * var(--panel-pad))));
+  margin-inline: auto;
+
+  padding: var(--panel-pad);
+  border: 1px solid var(--surfaceBorder);
+  border-radius: 22px;
+  background: var(--surface);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Hero meta (pill + kicker) */
+.heroMeta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 0 auto 12px;
+  max-width: 76ch;
+}
+
+.heroPill {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--surfaceBorder);
+  background: rgba(18, 28, 47, 0.04);
+  font-weight: 650;
+  font-size: 13px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.heroMetaText {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Center the constrained hero blocks (fixes the “left glued” feel) */
+.heroTitle {
+  margin: 0 auto;
+  max-width: 22ch;
+}
+
+.heroSub {
+  margin: 16px auto 0;
+  max-width: 74ch;
+  font-size: var(--lead);
+  color: var(--muted);
+}
+
+.heroTrust {
+  margin: 10px auto 0;
+  max-width: 74ch;
+  font-size: var(--small);
+  color: var(--faint);
+}
+
+.ctaRow {
+  display: flex;
+  gap: calc(var(--stack) * 0.55);
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: calc(var(--stack) * 0.9);
+}
+
+/* =========================
+   Buttons
+   ========================= */
+
+.btnPrimary,
+.btnGhost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 14px 18px;
+  border-radius: 14px;
+
+  border: 1px solid var(--border);
+  text-decoration: none;
+
+  font-weight: 650;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  color: var(--text);
+
+  transition:
+    transform 140ms ease,
+    background 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    opacity 140ms ease;
+
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btnPrimary {
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.1);
+}
+
+.btnGhost {
+  background: transparent;
+  box-shadow: none;
+}
+
+.btnPrimary:hover {
+  transform: translateY(-1px);
+  background: rgba(18, 28, 47, 0.06);
+  border-color: rgba(12, 18, 32, 0.18);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.12);
+}
+
+.btnGhost:hover {
+  transform: translateY(-1px);
+  background: rgba(18, 28, 47, 0.05);
+  border-color: rgba(12, 18, 32, 0.16);
+}
+
+.btnPrimary:active,
+.btnGhost:active {
+  transform: translateY(0);
+  opacity: 0.92;
+}
+
+.btnPrimary:focus-visible,
+.btnGhost:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 4px rgba(18, 28, 47, 0.18),
+    0 10px 26px rgba(0, 0, 0, 0.1);
+}
+
+/* Motion respect */
+@media (prefers-reduced-motion: reduce) {
+  .btnPrimary,
+  .btnGhost {
+    transition: none;
   }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* =========================
+   Sections (cards)
+   ========================= */
+
+.section {
+  text-align: left;
+
+  width: min(100%, calc(76ch + (2 * var(--panel-pad))));
+  margin-inline: auto;
+
+  padding: var(--panel-pad);
+  border: 1px solid var(--surfaceBorder);
+  border-radius: 18px;
+  background: var(--surface);
 }
 
-.card {
-  padding: 2em;
+/* Readability constraints */
+.section > * {
+  max-width: 76ch;
 }
 
-.read-the-docs {
-  color: #888;
+.section > h2 {
+  max-width: 36ch;
+  font-size: var(--h2);
+  line-height: 1.12;
+  margin: 0 0 12px;
+}
+
+/* Default spacing for section text */
+.section p {
+  margin: 0;
+}
+
+.section p + p {
+  margin-top: 12px;
+}
+
+.sectionLead {
+  margin-top: 10px;
+  color: var(--muted);
+}
+
+.sectionFaint {
+  margin-top: 14px;
+  color: var(--faint);
+}
+
+.sectionLabel {
+  margin-top: 16px;
+  font-weight: 650;
+  color: var(--text);
+}
+
+.bullets {
+  margin: 14px 0 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.bullets li {
+  margin-top: 10px;
+  padding-left: 18px;
+  position: relative;
+  color: var(--text);
+  opacity: 0.92;
+}
+
+.bullets li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(18, 28, 47, 0.28);
+}
+
+strong {
+  color: var(--text);
+  font-weight: 650;
+}
+
+/* =========================
+   FAQ
+   ========================= */
+
+.faqItem {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.faqItem:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.faqQ {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  cursor: pointer;
+  font-weight: 650;
+  color: var(--text);
+}
+
+.faqQ::after {
+  content: "+";
+  font-weight: 700;
+  color: rgba(18, 28, 47, 0.45);
+}
+
+details[open] .faqQ::after {
+  content: "–";
+}
+
+.faqA {
+  margin-top: 10px;
+  color: var(--muted);
+}
+
+/* =========================
+   Footer
+   ========================= */
+
+.footer {
+  margin-top: calc(var(--stack) * 1.2);
+  opacity: 0.72;
+  text-align: left;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.footer p + p {
+  margin-top: 8px;
 }
